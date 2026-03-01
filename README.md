@@ -54,7 +54,7 @@ Coir Netra connects every stakeholder in the coir supply chain — from coconut 
 
 ```
 coir-netra/
-├── client/                     # React frontend
+├── website/                    # React frontend
 │   ├── public/
 │   ├── src/
 │   │   ├── components/         # Reusable UI components
@@ -152,11 +152,11 @@ npm run dev
 ### 3. Set up the frontend
 
 ```bash
-cd ../client
+cd ../website
 npm install
 ```
 
-Create a `.env` file in the `/client` directory:
+Create a `.env` file in the `/website` directory:
 
 ```env
 VITE_API_URL="http://localhost:3000"
@@ -238,7 +238,7 @@ All AI calls are proxied through the backend — the Antigravity API key is neve
 ### Frontend (Vercel)
 
 ```bash
-cd client
+cd website
 npm run build
 # Deploy /dist to Vercel or push to GitHub for auto-deploy
 ```
@@ -282,7 +282,7 @@ Push the `/server` directory to a Railway project. Set all environment variables
 | `npx prisma studio` | Open Prisma DB GUI |
 | `npx prisma db seed` | Seed sample data |
 
-### Frontend (`/client`)
+### Frontend (`/website`)
 
 | Command | Description |
 |---------|-------------|

@@ -1,0 +1,32 @@
+# COIR-NETRA: BACKEND AI HANDOFF NOTES
+
+Hello! This document contains context for integrating the new `CoirBot` AI endpoint into the main `website` backend, as well as cleanup steps for the repository.
+
+## 1. Context: What's Been Built
+We successfully built a production-ready AI Assistant API using the official `@google/generative-ai` SDK (`gemini-2.5-flash`). It is currently located in `d:/git folder/Coir-Netra/server/routes/ai.js`.
+
+The endpoint (`POST /api/ai/chat`) handles:
+1. **Context Retrieval (RAG-lite)**: It takes the user's message, extracts keywords, and queries the local Prisma `products` database table to find matching inventory.
+2. **Context Injection**: It formats the found products (Price, Location, Quantity) and prepends them inside the Gemini System Prompt so the AI replies with factual, real-time marketplace data.
+3. **Function Calling (Tools)**: We provided the AI with a `calculate_shipping_distance` tool schema. If the AI determines the user is asking about shipping times or distance, it pauses, executes a direct `fetch` to the Google Maps API, and feeds the distance result back into the prompt to finish the users answer.
+
+## 2. Integration Instructions for the Backend Team
+Currently, `server/` is acting as a temporary sandbox to test this code. You need to port this into your actual backend architecture.
+
+1. **Move the Route**: Take the logic from `server/routes/ai.js` and integrate it into your main Express router setup. 
+2. **Move Dependencies**: Ensure your primary `package.json` includes `@google/generative-ai` and `@prisma/client`.
+3. **Port Environment Variables**: Move the following keys into your production `.env` file:
+    - `ANTIGRAVITY_API_KEY` (Our Gemini Key)
+    - `GOOGLE_MAPS_API_KEY`
+4. **Prisma Schema Updates**: Currently, the demo queries a local SQLite database that we seeded to test the RAG logic. 
+    - You must ensure your actual Postgres schema has similar column names (`name`, `price_per_kg`, `quantity_available`). 
+    - **CRITICAL FIX FOR POSTGRES**: Inside `ai.js`, around line 75, we removed `mode: 'insensitive'` from the Prisma query because SQLite doesn't support it. Since you are using Postgres, **you should add `mode: 'insensitive'` back to the query** so users can search for "coir" or "COIR" identically.
+
+## 3. Mandatory Cleanup Tasks
+Because we built a temporary sandbox `server` alongside your actual `website`, there is redundant code that **must be deleted** to keep the repository clean.
+
+1. **Delete the Sandbox Folder**: The entire `server/` directory (`d:/git folder/Coir-Netra/server/`) was just a testing ground. Once you extract `ai.js` and your `.env` keys, **delete this entire folder**. (This removes the redundant `index.js`, SQLite `dev.db`, and duplicate `package.json`).
+2. **Delete the Seed Script**: Ensure `server/prisma/seed.js` doesn't make it to production.
+3. **Update README**: Update any `README.md` files that reference the temporary `server/` architecture or SQLite setup. The README files should only point developers toward your unified stack.
+
+Please reach out if you have questions on how the Function Declarations or `startChat()` History arrays are managed by the SDK!
