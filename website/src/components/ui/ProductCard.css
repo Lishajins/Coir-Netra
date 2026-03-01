@@ -1,0 +1,141 @@
+.product-card {
+    background: white;
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    box-shadow: var(--shadow-sm);
+    transition: var(--transition);
+    border: 1px solid var(--border);
+    display: flex;
+    flex-direction: column;
+}
+
+.product-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-md);
+    border-color: transparent;
+}
+
+.card-img-wrap {
+    position: relative;
+    height: 200px;
+    overflow: hidden;
+    background: var(--green-light);
+}
+
+.card-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.45s ease;
+}
+
+.product-card:hover .card-img {
+    transform: scale(1.06);
+}
+
+.card-badge {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 0.72rem;
+    font-weight: 700;
+    padding: 3px 10px;
+    border-radius: var(--radius-pill);
+}
+
+.card-badge.trending {
+    background: var(--gold-kerala);
+    color: #333;
+}
+
+.card-out-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.45);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 0.9rem;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+}
+
+.card-body {
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    flex: 1;
+}
+
+.card-name {
+    font-size: 0.98rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    line-height: 1.35;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.card-meta {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    color: var(--text-muted);
+    font-size: 0.82rem;
+}
+
+.card-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: auto;
+    padding-top: 4px;
+}
+
+.card-price {
+    display: flex;
+    align-items: baseline;
+    gap: 2px;
+}
+
+.price-val {
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: var(--green-deep);
+}
+
+.price-unit {
+    font-size: 0.78rem;
+    color: var(--text-muted);
+}
+
+.card-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    background: var(--green-primary);
+    color: white;
+    padding: 7px 14px;
+    border-radius: var(--radius-pill);
+    font-size: 0.82rem;
+    font-weight: 600;
+    transition: var(--transition);
+}
+
+.card-btn:hover {
+    background: var(--green-deep);
+    transform: translateX(2px);
+}
+
+.card-btn.disabled {
+    background: #ccc;
+    color: #888;
+    pointer-events: none;
+}
