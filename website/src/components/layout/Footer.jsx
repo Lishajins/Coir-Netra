@@ -50,7 +50,7 @@ export default function Footer() {
                         <ul className="contact-list">
                             <li><MapPin size={14} /> Alappuzha, Kerala, India</li>
                             <li><Mail size={14} /> info@coirnetra.in</li>
-                            <li><Phone size={14} /> +91 94471 00000</li>
+                            <li><Phone size={14} /> +91 97471 98894</li>
                         </ul>
                     </div>
                 </div>
