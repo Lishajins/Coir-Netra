@@ -77,7 +77,7 @@ router.post('/chat', async (req, res) => {
     const keywords = userMessage.split(/\s+/).filter(w => w.length > 3);
 
     const searchConditions = keywords.map(word => ({
-      name: { contains: word } // Remember we removed mode: 'insensitive' for SQLite compatibility
+      name: { contains: word, mode: 'insensitive' }
     }));
 
     const matchingProducts = await prisma.products.findMany({
