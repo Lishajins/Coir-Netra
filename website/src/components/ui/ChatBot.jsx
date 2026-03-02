@@ -33,7 +33,7 @@ export default function ChatBot() {
         }
     }, [messages, typing]);
 
-    const sendMessage = () => {
+    const sendMessage = async () => {
         const text = input.trim();
         if (!text) return;
 
@@ -42,16 +42,25 @@ export default function ChatBot() {
         setInput('');
         setTyping(true);
 
-        setTimeout(() => {
+        try {
+            const response = await fetch('http://localhost:3000/api/ai/chat', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ userMessage: text })
+            });
+            const data = await response.json();
+
             const botMsg = {
                 id: Date.now() + 1,
                 from: 'bot',
-                text: SAMPLE_RESPONSES[responseIndex % SAMPLE_RESPONSES.length],
+                text: data.reply || data.error || "Sorry, I couldn't understand that.",
             };
-            responseIndex++;
             setMessages((prev) => [...prev, botMsg]);
+        } catch (error) {
+            setMessages((prev) => [...prev, { id: Date.now() + 1, from: 'bot', text: "Error connecting to AI server." }]);
+        } finally {
             setTyping(false);
-        }, 1200);
+        }
     };
 
     const handleKey = (e) => {
