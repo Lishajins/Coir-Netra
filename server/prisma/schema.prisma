@@ -19,6 +19,13 @@ model products {
   name               String
   price_per_kg       Decimal
   quantity_available Int
+  categoryId         String
+  subcategoryId      String
+  description        String
+  image              String
+  unit               String
+  inStock            Boolean @default(true)
+  trending           Boolean @default(false)
   
   seller             users   @relation(fields: [seller_id], references: [id])
 }
