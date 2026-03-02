@@ -3,7 +3,7 @@ generator client {
 }
 
 datasource db {
-  provider = "sqlite"
+  provider = "postgresql"
   url      = env("DATABASE_URL")
 }
 
@@ -17,7 +17,7 @@ model products {
   id                 String  @id @default(uuid())
   seller_id          String
   name               String
-  price_per_kg       Float
+  price_per_kg       Decimal
   quantity_available Int
   
   seller             users   @relation(fields: [seller_id], references: [id])
