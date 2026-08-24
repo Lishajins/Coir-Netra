@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://coir-netra.vercel.app/sitemap.xml
