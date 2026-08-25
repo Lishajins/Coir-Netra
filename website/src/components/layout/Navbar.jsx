@@ -1,12 +1,11 @@
 import { useState, useRef, useEffect } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
-import { Search, Filter, Menu, X, Leaf, LogIn, LayoutDashboard } from 'lucide-react';
+import { Search, Menu, X, Leaf, LogIn, LayoutDashboard } from 'lucide-react';
 import { useAuthStore, useSearchStore } from '../../store/store';
 import './Navbar.css';
 
 export default function Navbar() {
     const [menuOpen, setMenuOpen] = useState(false);
-    const [filterOpen, setFilterOpen] = useState(false);
     const { isAuthenticated, logout } = useAuthStore();
     const { query, setQuery } = useSearchStore();
     const navigate = useNavigate();
@@ -21,6 +20,7 @@ export default function Navbar() {
     };
 
     useEffect(() => {
+        // eslint-disable-next-line react-hooks/set-state-in-effect
         setMenuOpen(false);
     }, [location.pathname]);
 

@@ -1,22 +1,9 @@
-import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { ChevronRight, ArrowRight } from 'lucide-react';
 import { CATEGORIES, ALL_SUBCATEGORIES } from '../data/mockData';
 import './MarketplacePage.css';
 
 export default function MarketplacePage() {
-    const [activeSlides, setActiveSlides] = useState({ primary: 0, intermediate: 0, final: 0 });
-
-    useEffect(() => {
-        const timer = setInterval(() => {
-            setActiveSlides((prev) => ({
-                primary: (prev.primary + 1) % 3,
-                intermediate: (prev.intermediate + 1) % 3,
-                final: (prev.final + 1) % 3,
-            }));
-        }, 3000);
-        return () => clearInterval(timer);
-    }, []);
 
     return (
         <main className="marketplace-page page-enter">

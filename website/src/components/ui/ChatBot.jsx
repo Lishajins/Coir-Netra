@@ -10,15 +10,7 @@ const INITIAL_MESSAGES = [
     },
 ];
 
-const SAMPLE_RESPONSES = [
-    "Great question! Brown coir fibre is available from multiple sellers in Alappuzha. It's typically priced between ₹15–22 per kg depending on grade. Check the Raw Materials section for current listings.",
-    "Coco peat blocks are highly popular for horticulture exports. A standard 5kg block expands to about 70–75 litres of growing medium. Our sellers in Thrissur and Ernakulam offer export-quality blocks.",
-    "For coir rope, I recommend 2-ply or 3-ply twisted rope. The 6mm variety is most popular for decorative and utility uses. Check our Intermediate Products section for current availability.",
-    "White coir fibre is produced using traditional water-retting — a technique Alappuzha is famous for. It's preferred for fine yarn and premium mats. Prices range from ₹20–28/kg.",
-    "The coir industry in Alappuzha (Alleppey) dates back over 150 years. It employs over 300,000 workers across Kerala. Coir Netra connects you directly to these grassroots producers.",
-];
 
-let responseIndex = 0;
 
 export default function ChatBot() {
     const [open, setOpen] = useState(false);
@@ -56,7 +48,7 @@ export default function ChatBot() {
                 text: data.reply || data.error || "Sorry, I couldn't understand that.",
             };
             setMessages((prev) => [...prev, botMsg]);
-        } catch (error) {
+        } catch {
             setMessages((prev) => [...prev, { id: Date.now() + 1, from: 'bot', text: "Error connecting to AI server." }]);
         } finally {
             setTyping(false);
