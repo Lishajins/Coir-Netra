@@ -1,331 +1,166 @@
-# 🌿 Coir Netra
+# Coir Netra
 
-> **The Unified Digital Marketplace for Kerala's Coir Industry**
+A digital marketplace for Kerala's coir industry, built for Alappuzha, the coir capital of the world. Coir Netra connects everyone in the coir supply chain (coconut farmers, husk suppliers, fibre processors, artisans, and finished goods sellers) on a single platform.
 
-Coir Netra connects every stakeholder in the coir supply chain — from coconut farmers and husk suppliers to fibre processors, artisans, and finished-goods sellers — within a single intelligent platform. Built for Alappuzha, the Coir Capital of the World.
+## Current status
 
----
+- The React frontend in `website/` implements the welcome page, marketplace hub, category browsing, product listing and detail pages, seller authentication, and a seller dashboard. Page data currently comes from `website/src/data/mockData.js`.
+- The Express backend in `server/` exposes a health check at `GET /api/health` and an AI chat endpoint at `POST /api/ai/chat`.
+- Product documents (PRD, app flow, tech stack, frontend guidelines, backend schema, AI implementation plan) live in `imp_docs/`.
 
-## ✨ Features
+## Features
 
-- **🏪 Full Supply Chain Marketplace** — Browse and list products across all three stages: Raw Materials → Intermediate Products → Final Goods
-- **🔍 Intelligent Search & Filters** — Search by product name, category, subcategory, or seller. Filter by Kerala district, price range, and quantity
-- **🤖 CoirBot AI Assistant** — Chatbot that answers sourcing questions and provides market guidance on every page
-- **📈 Price Trend Insights** — AI-generated analysis of regional price averages shown on every product detail page
-- **📊 Demand Analytics** — Sellers get AI-powered insights into trending products and buyer activity in their dashboard
-- **🛠️ Seller Dashboard** — Complete product management with stock toggles, image uploads, and profile management
-- **📱 Fully Responsive** — Mobile-first design optimised for use across all screen sizes
+- Marketplace across three stages: raw materials, intermediate products, and final goods
+- Search and filters by name, category, subcategory, district, price, and quantity (frontend)
+- Seller dashboard screens for product management (frontend)
+- CoirBot AI assistant endpoint backed by Google Generative AI
+- Responsive mobile first layout
 
----
-
-## 🖥️ Pages Overview
-
-| Page | Route | Description |
-|------|-------|-------------|
-| Welcome | `/` | Hero slideshow, industry intro, CTAs |
-| Marketplace Hub | `/marketplace` | Category cards + subcategory carousel |
-| Product Listing | `/products` | Filterable product grid |
-| Product Detail | `/product/:id` | Full product info + AI price insight |
-| Seller Auth | `/auth` | Sign up / Login (split-screen) |
-| Seller Dashboard | `/seller/dashboard` | Manage products, AI analytics, profile |
-
----
-
-## 🛠️ Tech Stack
+## Tech stack
 
 | Layer | Technology |
-|-------|------------|
-| Frontend | React 18 + Vite |
-| Styling | Vanilla CSS + CSS Variables / Tailwind CSS |
-| State Management | Zustand |
-| Server State | React Query (TanStack) |
-| Routing | React Router DOM v6 |
-| Backend | Node.js + Express.js |
-| Database | PostgreSQL (via Supabase) |
-| ORM | Prisma |
-| Authentication | JWT + bcrypt |
-| Image Storage | Cloudinary |
-| Frontend Deploy | Vercel |
-| Backend Deploy | Railway |
+| ----- | ---------- |
+| Frontend | React 19 + Vite |
+| Routing | React Router DOM v7 |
+| Client state | Zustand (auth, search, filter stores) |
+| Server state | TanStack React Query |
+| Styling | CSS modules and plain CSS |
+| Backend | Node.js + Express |
+| Database | PostgreSQL via Prisma ORM |
+| AI | @google/generative-ai |
+| Notifications | react-hot-toast |
+| Icons | lucide-react |
 
----
-
-## 🗂️ Project Structure
+## Repository structure
 
 ```
 coir-netra/
-├── website/                    # React frontend
-│   ├── public/
-│   ├── src/
-│   │   ├── components/         # Reusable UI components
-│   │   │   ├── Navbar/
-│   │   │   ├── ProductCard/
-│   │   │   ├── ChatBot/        # CoirBot widget (global)
-│   │   │   ├── CategoryCard/
-│   │   │   └── ProtectedRoute/
-│   │   ├── pages/              # Route-level page components
-│   │   │   ├── WelcomePage/
-│   │   │   ├── MarketplacePage/
-│   │   │   ├── ProductsPage/
-│   │   │   ├── ProductDetailPage/
-│   │   │   ├── AuthPage/
-│   │   │   └── SellerDashboard/
-│   │   ├── store/              # Zustand stores
-│   │   │   └── store.js        # useAuthStore, useSearchStore, useFilterStore
-│   │   ├── hooks/              # Custom React hooks
-│   │   ├── utils/              # Helper functions
-│   │   ├── App.jsx             # Root component + routing
-│   │   └── index.css           # Global CSS variables & base styles
-│   └── vite.config.js
-│
-├── server/                     # Node.js + Express backend
-│   ├── routes/
-│   │   ├── auth.js
-│   │   ├── products.js
-│   │   ├── categories.js
-│   │   ├── seller.js
-│   │   ├── search.js
-│   │   ├── ai.js               # Antigravity proxy
-│   │   └── upload.js
-│   ├── middleware/
-│   │   ├── authMiddleware.js   # JWT verification
-│   │   └── rateLimiter.js
-│   ├── prisma/
-│   │   └── schema.prisma       # Database schema
-│   └── index.js                # Express app entry point
-│
+├── website/                  # React frontend
+│   └── src/
+│       ├── components/
+│       │   ├── layout/
+│       │   └── ui/
+│       ├── pages/            # Welcome, Marketplace, Category, Products,
+│       │                     # ProductDetail, Auth, SellerDashboard
+│       ├── store/store.js    # useAuthStore, useSearchStore, useFilterStore
+│       ├── data/mockData.js  # Sample catalogue data
+│       └── App.jsx           # Root component and routes
+├── server/                   # Node.js + Express backend
+│   ├── index.js              # App entry, mounts /api/ai and /api/health
+│   ├── routes/ai.js          # POST /api/ai/chat
+│   └── prisma/
+│       ├── schema.prisma     # users and products models
+│       └── seed.js           # Sample data seeder
+├── imp_docs/                 # Product and design documents (.docx)
 └── README.md
 ```
 
----
+## Getting started
 
-## 🚀 Getting Started
+Prerequisites: Node.js 18+ and a PostgreSQL database (a free Supabase project works).
 
-### Prerequisites
-
-- Node.js v18+
-- npm or pnpm
-- PostgreSQL database (or a free [Supabase](https://supabase.com) project)
-- [Cloudinary](https://cloudinary.com) account (free tier)
-- [Antigravity](https://antigravity.ai) API key
-
-### 1. Clone the repository
-
-```bash
-git clone https://github.com/your-username/coir-netra.git
-cd coir-netra
-```
-
-### 2. Set up the backend
+### 1. Backend
 
 ```bash
 cd server
 npm install
 ```
 
-Create a `.env` file in the `/server` directory:
+Create `server/.env`:
 
 ```env
 DATABASE_URL="postgresql://user:password@host:5432/coirnetra"
-JWT_SECRET="your-super-secret-jwt-key"
-CLOUDINARY_CLOUD_NAME="your-cloud-name"
-CLOUDINARY_API_KEY="your-api-key"
-CLOUDINARY_API_SECRET="your-api-secret"
-ANTIGRAVITY_API_KEY="your-antigravity-key"
-CLIENT_URL="http://localhost:5173"
+ANTIGRAVITY_API_KEY="your-google-gemini-key"
+GOOGLE_MAPS_API_KEY="your-google-maps-key"
 PORT=3000
 ```
 
-Run database migrations:
+Run migrations and start the server:
 
 ```bash
 npx prisma migrate dev --name init
-npx prisma db seed         # Optional: seed with sample categories & products
+npx prisma db seed    # Optional: seed with sample data
+npm run dev           # Nodemon, listens on PORT or 3000
 ```
 
-Start the backend server:
+Verify with `GET /api/health`, which returns a status message.
 
-```bash
-npm run dev
-```
-
-### 3. Set up the frontend
-
-```bash
-cd ../website
-npm install
-```
-
-Create a `.env` file in the `/website` directory:
-
-```env
-VITE_API_URL="http://localhost:3000"
-```
-
-Start the frontend dev server:
-
-```bash
-npm run dev
-```
-
-The app will be available at **http://localhost:5173**
-
----
-
-## 🗃️ Database Schema
-
-```
-users           → Seller accounts (email, password_hash, name, contact, location)
-categories      → 3 main categories
-subcategories   → 18 subcategories linked to categories
-products        → All listings (linked to seller + subcategory)
-analytics_events→ Page views, searches, filter interactions
-rfq_leads       → Buyer inquiry messages to sellers
-```
-
----
-
-## 🤖 AI Features (Antigravity)
-
-All AI calls are proxied through the backend — the Antigravity API key is never exposed to the frontend.
-
-| Feature | Endpoint | Cache |
-|---------|----------|-------|
-| CoirBot chatbot | `POST /api/ai/chat` | None (real-time) |
-| Price trend insight | `GET /api/ai/price-trends?subcategory=:id` | 6 hours |
-| Demand analytics | `GET /api/ai/demand-insights?sellerId=:id` | 24 hours |
-
----
-
-## 📦 Product Categories
-
-<details>
-<summary><b>Primary Raw Materials</b></summary>
-
-- Coconut Husk
-- Brown Coir Fibre
-- White Coir Fibre
-- Coir Pith / Coco Peat
-</details>
-
-<details>
-<summary><b>Intermediate Materials</b></summary>
-
-- Coco Peat Blocks / Briquettes / Bricks
-- Coir Chips / Husk Chips
-- Coir Yarn
-- Coir Rope
-</details>
-
-<details>
-<summary><b>Final Goods</b></summary>
-
-- Mats & Matting
-- Mattresses & Upholstery
-- Geo-Textiles
-- Horticulture & Gardening Products (Grow Bags, Pots, Substrates)
-- Household & Utility Items (Doormats, Brushes, Baskets, Nets)
-- Organic Soil Amendments
-- Coconut Shell Charcoal
-- Activated Carbon
-- Shell Powder
-</details>
-
----
-
-## 🌐 Deployment
-
-### Frontend (Vercel)
+### 2. Frontend
 
 ```bash
 cd website
-npm run build
-# Deploy /dist to Vercel or push to GitHub for auto-deploy
+npm install
+npm run dev           # Dev server at http://localhost:5173
 ```
 
-Set environment variable on Vercel:
-```
-VITE_API_URL=https://your-railway-backend.up.railway.app
-```
+### Scripts
 
-### Backend (Railway)
-
-Push the `/server` directory to a Railway project. Set all environment variables from the `.env` template above in the Railway dashboard.
-
----
-
-## 🔒 Environment Variables Reference
-
-| Variable | Where | Description |
-|----------|-------|-------------|
-| `DATABASE_URL` | Server | PostgreSQL connection string |
-| `JWT_SECRET` | Server | Secret key for signing JWTs |
-| `CLOUDINARY_CLOUD_NAME` | Server | Your Cloudinary cloud name |
-| `CLOUDINARY_API_KEY` | Server | Cloudinary API key |
-| `CLOUDINARY_API_SECRET` | Server | Cloudinary API secret |
-| `ANTIGRAVITY_API_KEY` | Server | Antigravity platform key |
-| `CLIENT_URL` | Server | Frontend URL for CORS config |
-| `PORT` | Server | Backend port (default: 3000) |
-| `VITE_API_URL` | Client | Backend API base URL |
-
----
-
-## 📋 Available Scripts
-
-### Backend (`/server`)
+Backend (`server/`):
 
 | Command | Description |
-|---------|-------------|
+| ------- | ----------- |
 | `npm run dev` | Start dev server with nodemon |
-| `npm start` | Start production server |
+| `node index.js` | Run without nodemon |
 | `npx prisma migrate dev` | Run new migrations |
-| `npx prisma studio` | Open Prisma DB GUI |
+| `npx prisma studio` | Open the Prisma database GUI |
 | `npx prisma db seed` | Seed sample data |
 
-### Frontend (`/website`)
+Frontend (`website/`):
 
 | Command | Description |
-|---------|-------------|
-| `npm run dev` | Start Vite dev server |
-| `npm run build` | Build for production |
-| `npm run preview` | Preview production build locally |
+| ------- | ----------- |
+| `npm run dev` | Start the Vite dev server |
+| `npm run build` | Build for production to `dist/` |
+| `npm run preview` | Preview the production build locally |
+| `npm run lint` | ESLint |
 
----
+## Database models
 
-## 🗺️ Roadmap
+`server/prisma/schema.prisma` defines two models:
 
-- [x] Seller registration & dashboard
-- [x] Product listing with 3-tier categories
-- [x] Search & advanced filters
-- [x] AI chatbot (CoirBot)
-- [x] Price trend insights
-- [x] Demand analytics for sellers
+- `users`: seller accounts
+- `products`: listings linked to a seller
+
+`seed.js` inserts sample rows so the frontend has something to show.
+
+## AI chat endpoint
+
+`POST /api/ai/chat` takes `{ "userMessage": "..." }` and returns the assistant reply. The API key stays on the server; the frontend never sees it.
+
+## Deployment
+
+Typical split:
+
+- Frontend on Vercel: `cd website && npm run build`, then deploy `dist/`.
+- Backend on Railway or any Node host: push the `server/` directory and set the environment variables from the template above.
+
+## Roadmap
+
+- [x] Seller registration and dashboard screens
+- [x] Product listing with three tier categories
+- [x] Search and advanced filters (mock data)
+- [x] AI chatbot endpoint (CoirBot)
+- [ ] Wire frontend pages to live backend endpoints
+- [ ] Price trend insights and demand analytics
 - [ ] UPI payment integration
-- [ ] Buyer accounts & wishlist
+- [ ] Buyer accounts and wishlist
 - [ ] WhatsApp Business API integration
 - [ ] Malayalam language support
-- [ ] Verified Seller badges
+- [ ] Verified seller badges
 - [ ] React Native mobile app
 
----
-
-## 🤝 Contributing
+## Contributing
 
 1. Fork the repository
 2. Create a feature branch: `git checkout -b feature/your-feature`
 3. Commit your changes: `git commit -m 'Add your feature'`
-4. Push to the branch: `git push origin feature/your-feature`
-5. Open a Pull Request
+4. Push the branch: `git push origin feature/your-feature`
+5. Open a pull request
+
+## License
+
+This project is licensed under the MIT license.
 
 ---
 
-## 📄 License
-
-This project is licensed under the MIT License. See [LICENSE](LICENSE) for details.
-
----
-
-<div align="center">
-  <p>Built with 🌿 for Kerala's Coir Ecosystem</p>
-  <p><i>"Connecting the roots of Kerala's coir industry to the world."</i></p>
-</div>
+Built for Kerala's coir ecosystem. "Connecting the roots of Kerala's coir industry to the world."
