@@ -1,12 +1,11 @@
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
-import { Search, Filter, Menu, X, Leaf, LogIn, LayoutDashboard } from 'lucide-react';
+import { Search, Menu, X, Leaf, LogIn, LayoutDashboard } from 'lucide-react';
 import { useAuthStore, useSearchStore } from '../../store/store';
 import './Navbar.css';
 
 export default function Navbar() {
     const [menuOpen, setMenuOpen] = useState(false);
-    const [filterOpen, setFilterOpen] = useState(false);
     const { isAuthenticated, logout } = useAuthStore();
     const { query, setQuery } = useSearchStore();
     const navigate = useNavigate();
@@ -18,17 +17,16 @@ export default function Navbar() {
     const handleSearch = (e) => {
         e.preventDefault();
         if (query.trim()) navigate(`/search?q=${encodeURIComponent(query.trim())}`);
+        closeMenu();
     };
 
-    useEffect(() => {
-        setMenuOpen(false);
-    }, [location.pathname]);
+    const closeMenu = () => setMenuOpen(false);
 
     return (
         <nav className="navbar" id="main-navbar">
             <div className="container navbar-inner">
                 {/* Logo */}
-                <Link to="/" className="navbar-logo" id="nav-logo">
+                <Link to="/" className="navbar-logo" id="nav-logo" onClick={closeMenu}>
                     <div className="logo-icon"><Leaf size={18} /></div>
                     <span>Coir <strong>Netra</strong></span>
                 </Link>
@@ -61,13 +59,13 @@ export default function Navbar() {
                 <div className="navbar-actions">
                     {isAuthenticated ? (
                         <>
-                            <Link to="/seller/dashboard" className="nav-link" id="nav-dashboard">
+                            <Link to="/seller/dashboard" className="nav-link" id="nav-dashboard" onClick={closeMenu}>
                                 <LayoutDashboard size={16} /> Dashboard
                             </Link>
                             <button className="btn btn-outline-green btn-sm" onClick={logout} id="nav-logout">Logout</button>
                         </>
                     ) : (
-                        <Link to="/auth" className="btn btn-primary btn-sm" id="nav-seller-login">
+                        <Link to="/auth" className="btn btn-primary btn-sm" id="nav-seller-login" onClick={closeMenu}>
                             <LogIn size={15} /> Seller Login
                         </Link>
                     )}
@@ -91,14 +89,14 @@ export default function Navbar() {
                         />
                     </form>
                 )}
-                <Link to="/marketplace" className="drawer-link" id="mobile-marketplace">Marketplace</Link>
+                <Link to="/marketplace" className="drawer-link" id="mobile-marketplace" onClick={closeMenu}>Marketplace</Link>
                 {isAuthenticated ? (
                     <>
-                        <Link to="/seller/dashboard" className="drawer-link" id="mobile-dashboard">Dashboard</Link>
-                        <button className="drawer-link" onClick={logout} id="mobile-logout">Logout</button>
+                        <Link to="/seller/dashboard" className="drawer-link" id="mobile-dashboard" onClick={closeMenu}>Dashboard</Link>
+                        <button className="drawer-link" onClick={() => { logout(); closeMenu(); }} id="mobile-logout">Logout</button>
                     </>
                 ) : (
-                    <Link to="/auth" className="drawer-link highlight" id="mobile-login">Seller Login</Link>
+                    <Link to="/auth" className="drawer-link highlight" id="mobile-login" onClick={closeMenu}>Seller Login</Link>
                 )}
             </div>
         </nav>

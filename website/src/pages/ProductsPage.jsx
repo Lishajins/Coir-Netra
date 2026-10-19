@@ -2,7 +2,7 @@ import { useState, useMemo } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { Search, SlidersHorizontal, MapPin } from 'lucide-react';
 import { PRODUCTS, ALL_SUBCATEGORIES, KERALA_DISTRICTS } from '../data/mockData';
-import { useFilterStore, useSearchStore } from '../store/store';
+import { useFilterStore } from '../store/store';
 import ProductCard from '../components/ui/ProductCard';
 import './ProductsPage.css';
 
@@ -12,7 +12,6 @@ export default function ProductsPage() {
     const searchQ = searchParams.get('q');
 
     const [mobileFilterOpen, setMobileFilterOpen] = useState(false);
-    const { query, setQuery } = useSearchStore();
     const filters = useFilterStore();
 
     const subcat = ALL_SUBCATEGORIES.find(s => s.id === subcatId);

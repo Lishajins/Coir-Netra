@@ -4,7 +4,7 @@ import './ProductCard.css';
 
 export default function ProductCard({ product }) {
     if (!product) return null;
-    const { id, name, price, unit, seller, image, inStock, trending, subcategoryId } = product;
+    const { id, name, price, unit, seller, image, inStock, trending } = product;
 
     return (
         <article className="product-card" id={`product-card-${id}`}>
